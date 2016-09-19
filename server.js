@@ -7,7 +7,11 @@ var SaveCard = require("./model/saveCard");
 
 var app = express();
 app.use(bodyParser.json());
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 var app = express();
 var runServer = function(callback){
        console.log(config.DATABASE_URL)
