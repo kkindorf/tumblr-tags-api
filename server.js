@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config');
-var http = require('http');
+var https = require('https');
 var SaveCard = require("./model/saveCard");
 
 var app = express();
@@ -38,8 +38,8 @@ if(require.main === module){
 
 app.get("/search", function(req, res){
    var query = Object.keys(req.query);
-   var url = "http://api.tumblr.com/v2/tagged?tag="+query[0]+"&limit=300&api_key=F2iyRm0Ffc73oZncziOzs4SRvswAbAMQG4VS2ErSAHEtSB3JRz";
-   http.get(url, function(resp){
+   var url = "https://api.tumblr.com/v2/tagged?tag="+query[0]+"&limit=300&api_key=F2iyRm0Ffc73oZncziOzs4SRvswAbAMQG4VS2ErSAHEtSB3JRz";
+   https.get(url, function(resp){
        //console.log(res);
        resp.pipe(res);
    })
