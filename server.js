@@ -6,13 +6,16 @@ var https = require('https');
 var SaveCard = require("./model/saveCard");
 
 var app = express();
-app.use(bodyParser.json());
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "*");
+  res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-var app = express();
+app.use(bodyParser.json());
+
 var runServer = function(callback){
        console.log(config.DATABASE_URL)
        mongoose.connect(config.DATABASE_URL, function(err){
@@ -34,7 +37,9 @@ if(require.main === module){
         }
     })
 }
-
+app.options('/saved-cards', function(req, res){
+    return res.json({message: 'ok'})
+})
   app.get('/status', function(req,res){
       console.log('working? true')
     return res.json({message: 'ok'})
@@ -61,7 +66,7 @@ app.get('/saved-cards', function(req, res){
     })
 })
 app.post('/saved-cards', function(req, res){
-    console.log(req.body.postedData)
+    //console.log(req.body.postedData)
     SaveCard.create({
         src: req.body.postedData.src,
         blogname: req.body.postedData.blogName,
@@ -69,10 +74,12 @@ app.post('/saved-cards', function(req, res){
         timeStamp: req.body.postedData.timeStamp
     }, function(err, saveCard){
         if(err){
+            
             return res.status(500).json({
                 message: err
             })
         }
+        console.log(saveCard)
         res.status(201).json({saveCard});
     });
 });
