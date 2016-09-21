@@ -69,9 +69,11 @@ app.post('/saved-cards', function(req, res){
     //console.log(req.body.postedData)
     SaveCard.create({
         src: req.body.postedData.src,
-        blogname: req.body.postedData.blogName,
+        blogName: req.body.postedData.blogName,
         summary: req.body.postedData.summary,
-        timeStamp: req.body.postedData.timeStamp
+        timeStamp: req.body.postedData.timeStamp,
+        postUrl: req.body.postedData.postUrl
+        
     }, function(err, saveCard){
         if(err){
             
