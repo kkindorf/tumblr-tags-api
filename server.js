@@ -47,7 +47,7 @@ app.options('*', function(req, res){
 
 app.get("/search", function(req, res){
    var query = Object.keys(req.query);
-   var url = "https://api.tumblr.com/v2/tagged?tag="+query[0]+"&limit=50&api_key=F2iyRm0Ffc73oZncziOzs4SRvswAbAMQG4VS2ErSAHEtSB3JRz";
+   var url = "https://api.tumblr.com/v2/tagged?tag="+query[0]+"&limit=500&api_key=F2iyRm0Ffc73oZncziOzs4SRvswAbAMQG4VS2ErSAHEtSB3JRz";
    https.get(url, function(resp){
        //console.log(res);
        resp.pipe(res);
