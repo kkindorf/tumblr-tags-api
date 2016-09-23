@@ -99,8 +99,6 @@ app.delete('/saved-cards/:id', function(req, res){
     })
 })
 
-//app.use here is catching all of th endpoints if none of the endpoints were hit on a request 
-//made by the user
 app.use('*', function(request, response){
     response.status(404).json({
         message: 'Endpoint Not Found'
