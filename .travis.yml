@@ -8,3 +8,10 @@ addons:
     - mongodb-3.2-precise
     packages:
     - mongodb-org-server
+deploy:
+  provider: heroku
+  api_key:
+    secure: JSdJMfxBCQQkETGaD33RKYi7i6zOxO+KEFgI5Clbysz0LKQnUfIyfNp7nkH4kY5xtnooBp37ii/oTduf/eTH8jMigfcDKS74ZRng5Nu21OV3VPp6cP2+4JrlUTzPNgzmqdpNeDJRnnrzBXYLnLDNe80T72pGkUj4Uv0U0du+alf5uYFoy58G2eZa5qF8I71ewppPos+Q11joSPR5K93sp+x8yiHLSD+P87XMrrJQnq6UX5AvsJslhmyxodze7MBeD0tf/IfXOn5ARa2jEgRBXvwdwaKY6rMf6nDSIZwOlftuiVZulY8mBl4aqhKl3wQ1DVdHVnEenPobpbudKgENS2LA7ZfE7C8WHDwwOHogBknqWV+4l9xbx0RQgAVd/uP51Wo4RiyJ4L26QUdf07jKvBwglFeYJs0EUMG+P2CTtM+kJDTgPvZwpVmSPvvzxPiCuzwwmvZwqbaRCCxHC+3kFpf+ioXOxYoN2ZLgUjBg9Y1P0grE7rJlByWJmxNUNkAUbTM7bUGEZ9ZZ1E2Pjhvgz8mjvbgE3NlT4xiHR/JjZ3SSKmgx6frovbrHUPDxqYr7t7NFp9YvI1ob0+2+gOKvzvf28Wh2WM9f/0Sb0IwhkgrQXfcgGkNwFdS7azzK9TMAoRzGm3rSjziYWAYl6ygBVHbqyiYwe1Iv3J7pz9a9YMM=
+  app: serene-ridge-74209
+  on:
+    repo: kkindorf/tumblr-tags-api
