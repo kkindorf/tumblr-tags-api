@@ -4,9 +4,7 @@ var mongoose = require('mongoose');
 var config = require('./config');
 var https = require('https');
 var SaveCard = require("./model/saveCard");
-
 var app = express();
-
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
@@ -46,32 +44,41 @@ app.options('*', function(req, res){
 })
 
 app.get("/search", function(req, res){
-   var query = Object.keys(req.query);
-   var url = "https://api.tumblr.com/v2/tagged?tag="+query[0]+"&limit=500&api_key=F2iyRm0Ffc73oZncziOzs4SRvswAbAMQG4VS2ErSAHEtSB3JRz";
+   var url = "https://api.tumblr.com/v2/tagged?tag="+req.query.q+"&limit=500&api_key=F2iyRm0Ffc73oZncziOzs4SRvswAbAMQG4VS2ErSAHEtSB3JRz";
    https.get(url, function(resp){
        //console.log(res);
        resp.pipe(res);
    })
 });
 app.get('/saved-cards', function(req, res){
-    
-    SaveCard.find(function(err, savedCards){
-        
+    SaveCard.find()
+    .limit(1)
+    .sort('timeStamp')
+    .skip(req.query.skip || 0)
+    .exec(function(err, savedCards){
         if(err){
             return res.json({
                 message: 'There was a problem returning your cards'
             })
         }
-        res.json(savedCards)
+        SaveCard.count()
+        .exec(function(err, count){
+           if(err){
+              return res.json({
+                message: 'There was a problem returning the count'
+            })
+           }
+           console.log(savedCards, count)
+           res.json({savedCards: savedCards, count: count, skip: parseInt(req.query.skip)}) 
+        })
     })
 })
+
 app.post('/saved-cards', function(req, res){
-    //console.log(req.body.postedData)
     SaveCard.create({
         src: req.body.postedData.src,
         blogName: req.body.postedData.blogName,
         summary: req.body.postedData.summary,
-        timeStamp: req.body.postedData.timeStamp,
         postUrl: req.body.postedData.postUrl
         
     }, function(err, saveCard){
@@ -104,7 +111,5 @@ app.use('*', function(request, response){
         message: 'Endpoint Not Found'
     });
 });
-
-
 exports.app = app;
 exports.runServer = runServer;
