@@ -17,7 +17,6 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 
 var runServer = function(callback){
-       console.log(config.DATABASE_URL)
        mongoose.connect(config.DATABASE_URL, function(err){
         if(err && callback){
             return callback(err)
@@ -41,7 +40,6 @@ app.options('*', function(req, res){
     return res.json({message: 'ok'})
 })
   app.get('/status', function(req,res){
-      console.log('working? true')
     return res.json({message: 'ok'})
 })
 
@@ -49,12 +47,10 @@ app.get("/search", function(req, res){
    var query = Object.keys(req.query);
    var url = "https://api.tumblr.com/v2/tagged?tag="+query[0]+"&limit=500&api_key=F2iyRm0Ffc73oZncziOzs4SRvswAbAMQG4VS2ErSAHEtSB3JRz";
    https.get(url, function(resp){
-       //console.log(res);
        resp.pipe(res);
    })
 });
 app.get('/saved-cards', function(req, res){
-    
     SaveCard.find(function(err, savedCards){
         
         if(err){
@@ -66,7 +62,6 @@ app.get('/saved-cards', function(req, res){
     })
 })
 app.post('/saved-cards', function(req, res){
-    //console.log(req.body.postedData)
     SaveCard.create({
         src: req.body.postedData.src,
         blogName: req.body.postedData.blogName,
@@ -81,14 +76,12 @@ app.post('/saved-cards', function(req, res){
                 message: err
             })
         }
-        console.log(saveCard)
         res.status(201).json({saveCard});
     });
 });
 
 app.delete('/saved-cards/:id', function(req, res){
     var id = req.params.id;
-    console.log(id);
     SaveCard.findByIdAndRemove(id, function(error){
         if(error){
             return res.status(400).json({
