@@ -5,7 +5,6 @@ var config = require('./config');
 var https = require('https');
 var SaveCard = require('.model/saveCard.js');
 
-
 var app = express();
 
 app.use(function(req, res, next) {
