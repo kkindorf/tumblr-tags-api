@@ -2,7 +2,7 @@ global.DATABASE_URL = 'mongodb://localhost/tumblr-api-test';
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../server.js');
-var SaveCard = require('../model/saveCard')
+var SaveCard = require('./model/saveCard')
 
 var should = chai.should();
 var app = server.app;
