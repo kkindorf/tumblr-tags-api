@@ -3,7 +3,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config');
 var https = require('https');
-var SaveCard = require("./model/saveCard");
+var SaveCard = require('.model/saveCard.js');
+
 
 var app = express();
 
@@ -51,26 +52,14 @@ app.get("/search", function(req, res){
    })
 });
 app.get('/saved-cards', function(req, res){
-    SaveCard.find()
-    .limit(5)
-    .sort('timeStamp')
-    .skip(req.query.skip || 0)
-    .exec(function(err, savedCards){
+    SaveCard.find(function(err, savedCards){
+        
         if(err){
             return res.json({
                 message: 'There was a problem returning your cards'
             })
         }
-        SaveCard.count()
-        .exec(function(err, count){
-           if(err){
-              return res.json({
-                message: 'There was a problem returning the count'
-            })
-           }
-           console.log(savedCards, count)
-           res.json({savedCards: savedCards, count: count, skip: parseInt(req.query.skip)}) 
-        })
+        res.json(savedCards)
     })
 })
 app.post('/saved-cards', function(req, res){
